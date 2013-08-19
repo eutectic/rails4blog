@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<article class="panel">
+
+<h4 class="panel-heading"><%= @post.title %></h4>
+<%= @post.body %>
+<br>
+<p>
+  <strong>Posted by:</strong> <%= @post.user.email %> <strong>Created at :</strong> <%= @post.created_at %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post), class: 'label label-warning lab-sx' %> |
+<%= link_to 'Back', posts_path ,class: 'label label-default lab-sx' %>
+<br>
+</article>
+
+<% if @post.comments.length > 0 %>
+<p>
+  <section class="panel">
+    <h5 class="panel-heading">Comments</h5>
+  <% @post.comments.each do |comment| %>
+  <section class="panel">
+    <h5 class="panel-heading"><%= comment.title %> - <%= comment.user.email %></h5>
+  		<p><%= comment.body %></p>
+     <%= link_to 'Edit', edit_post_comment_path(@post , comment), class: 'label label-warning lab-sx' %> |
+     <%= link_to 'Destroy', post_comment_path(@post , comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %>
+	</section>
+
+  <% end %>
+  </section>
+</p>
+<% end %>
+<section class="panel">
+
+<h5 class="panel-heading">Add a comment:</h5>
+  <%= render 'comments/form' %>
+</section>

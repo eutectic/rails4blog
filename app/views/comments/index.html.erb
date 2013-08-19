@@ -1,0 +1,32 @@
+<section class="panel">
+<h4 class="panel-heading">Listing comments</h4>
+
+<table class="table table-condensed">
+  <thead class="table-heading">
+    <tr>
+      <th>Title</th>
+      <th width="50%">Body</th>
+      <th width="210">User</th>
+      <th width="150" class="pull-right">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.title %></td>
+        <td><%= comment.body %></td>
+        <td><%= comment.user.email %></td>
+        <td class="pull-right" >
+          <%= link_to 'Show', post_comment_path(comment[:post_id],comment[:id]) , class: 'label label-notify' %>
+         | <%= link_to 'Edit', edit_post_comment_path(comment[:post_id],comment[:id]), class: 'label label-warning btn-xs' %> | 
+        <%= link_to 'Destroy', post_comment_path(comment[:post_id],comment[:id]), method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_comment_path , class: 'btn btn-danger'%>
+</section>
