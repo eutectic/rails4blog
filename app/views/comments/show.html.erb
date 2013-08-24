@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @comment.title %>
@@ -19,6 +17,7 @@
   <strong>User:</strong>
   <%= @comment.user %>
 </p>
-
-<%= link_to 'Edit', edit_post_comment_path(@comment) %> |
+<% if can? :update, @comment %>
+<%= link_to 'Edit', post_comments_path(@comment[:post_id], @comment[:id]) %> |
+<% end %>
 <%= link_to 'Back', post_comments_path %>

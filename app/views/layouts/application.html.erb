@@ -7,15 +7,32 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<div class="navbar container">
-		<ul class="nav">
-			<% if user_signed_in? %>
-				<li><%= link_to "Sair (#{current_user.email})", destroy_user_session_path, method: :delete %></li>
-			<% else %>
-			<li><%= link_to "Sign In ", user_session_path %></li>
-			<% end %>
-		</ul>
+
+	<div class="navbar navbar-inverse">
+	      <div class="container">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        <a class="navbar-brand" href="#">RoR4 Blog App</a>	
+	        <div class="nav-collapse collapse">
+			  <ul class="nav navbar-nav">
+	            <li><%= link_to "Posts", posts_path %></li>
+	          </ul>
+
+	          <ul class="nav navbar-nav pull-right">
+					<% if user_signed_in? %>
+					<li class="pull-right"><%= link_to "Sign Out (#{current_user.email})", destroy_user_session_path, method: :delete %></li>
+					<% else %>
+					<li><%= link_to "Sign In ", user_session_path %></li>
+					<% end %>
+				</ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
 	</div>
+	
 	<div class="container">
 		<%= yield %>
 	</div>

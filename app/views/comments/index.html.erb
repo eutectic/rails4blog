@@ -19,7 +19,7 @@
         <td><%= comment.user.email %></td>
         <td class="pull-right" >
           <%= link_to 'Show', post_comment_path(comment[:post_id],comment[:id]) , class: 'label label-notify' %>
-         | <%= link_to 'Edit', edit_post_comment_path(comment[:post_id],comment[:id]), class: 'label label-warning btn-xs' %> | 
+         | <%= link_to 'Edita', post_comment_path(comment[:post_id], comment[:id]), class: 'label label-warning btn-xs' %> | 
         <%= link_to 'Destroy', post_comment_path(comment[:post_id],comment[:id]), method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %></td>
       </tr>
     <% end %>

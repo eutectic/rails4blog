@@ -4,11 +4,11 @@
 <table class="table table-condensed">
   <thead class="table-heading">
     <tr>
-      <th>Title</th>
-      <th width="50%">Body</th>
-      <th width="210">User</th>
+      <th width="150">Title</th>
+      <th >Body</th>
+      <th width="210">Owner</th>
       <th width="30">Comments</th>
-      <th width="150" class="pull-right">Actions</th>
+      <th width="170"></th>
     </tr>
   </thead>
 
@@ -19,16 +19,22 @@
         <td><%= post.body %></td>
         <td><%= post.user.email %></td>
         <td><%= post.comments.length %></td>
-        <td class="pull-right" >
+        <td>
           <%= link_to 'Show', post , class: 'label label-notify' %>
+          <% if can? :update, post %>
          | <%= link_to 'Edit', edit_post_path(post), class: 'label label-warning btn-xs' %> | 
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %></td>
+         <% end %>
+         <% if can? :destroy, post %>
+        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Post', new_post_path , class: 'btn btn-danger'%>
+<% if can? :create, Post %>
+  <%= link_to 'New Post', new_post_path , class: 'btn btn-danger'%>
+<% end %>
 </section>

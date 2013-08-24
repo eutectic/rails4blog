@@ -1,36 +1,40 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end %>
 <article class="panel">
-
-<h4 class="panel-heading"><%= @post.title %></h4>
-<%= @post.body %>
-<br>
-<p>
-  <strong>Posted by:</strong> <%= @post.user.email %> <strong>Created at :</strong> <%= @post.created_at %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post), class: 'label label-warning lab-sx' %> |
-<%= link_to 'Back', posts_path ,class: 'label label-default lab-sx' %>
-<br>
+  <h4 class="panel-heading"><%= @post.title %></h4>
+  <%= @post.body %>
+  <br>
+  <p>
+    <strong>Posted by:</strong> <%= @post.user.email %> <strong>Created at :</strong> <%= @post.created_at %>
+  </p>
+  <% if can? :update, @post %>
+    <%= link_to 'Edit', edit_post_path(@post), class: 'label label-warning lab-sx' %> |
+  <% end %>
+  <%= link_to 'Back', posts_path ,class: 'label label-default lab-sx' %>
 </article>
 
-<% if @post.comments.length > 0 %>
-<p>
-  <section class="panel">
-    <h5 class="panel-heading">Comments</h5>
-  <% @post.comments.each do |comment| %>
+<% if !@post.comments.first.id.nil? %>
+<section class="panel">
+  <h5 class="panel-heading">Comments</h5>
+  <% @post.comments.each do |comment| if !comment.id.nil?   %>
   <section class="panel">
     <h5 class="panel-heading"><%= comment.title %> - <%= comment.user.email %></h5>
-  		<p><%= comment.body %></p>
-     <%= link_to 'Edit', edit_post_comment_path(@post , comment), class: 'label label-warning lab-sx' %> |
-     <%= link_to 'Destroy', post_comment_path(@post , comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %>
+  	<p><%= comment.body %></p>
+    <% if can? :update, comment %>
+      <%= link_to 'Edit', edit_post_comment_path(@post , comment), class: 'label label-warning lab-sx' %> |
+    <% end %>
+    <% if can? :destroy, comment %>
+      <%= link_to 'Destroy', post_comment_path(@post , comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'label label-danger btn-xs' %>
+    <% end %>
 	</section>
-
-  <% end %>
-  </section>
-</p>
+  <% end end %>
+</section>
 <% end %>
+<% if can? :create, @comment %>
 <section class="panel">
-
-<h5 class="panel-heading">Add a comment:</h5>
+  <h5 class="panel-heading">Add a comment:</h5>
   <%= render 'comments/form' %>
 </section>
+<% end %>
+<%= link_to 'Back', posts_path ,class: 'btn btn-danger' %>

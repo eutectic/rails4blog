@@ -14,3 +14,13 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
+$(document).ready(function () {
+	$.bind("ajax:success", function() {
+		alert($(this));
+	});
+
+	$.bind("ajax:error", function() {
+		alert('error');
+	});
+});
